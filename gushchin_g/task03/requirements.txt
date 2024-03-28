@@ -1,2 +1,1 @@
 pytest ~= 7.4.0
-importlib-metadata ~= 3.4.0
