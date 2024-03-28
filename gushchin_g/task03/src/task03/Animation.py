@@ -8,23 +8,26 @@ from typing import Union
 
 class Animation:
     version: int = 0
-    __nodes: List[
-        Union[int, str, int]
-        ] = []  # id name value
+    __nodes: List[Union[int, str, int]] = []  # id name value
     __steps: List[
         Union[
-            int, # time
+            int,  # time
             List[
-                Union[int, List[float]] # id, values
-            ]
+                Union[int, List[float]]  # id, values
+            ],
         ]
     ] = []  # time [id vectors x6]
 
-    def __init__(self, version : int = None, nodes : List[Union[int, str, int]]=None, steps : List[Union[int, List[Union[int, List[float]]]]]=None):
+    def __init__(
+        self,
+        version: int = None,
+        nodes: List[Union[int, str, int]] = None,
+        steps: List[Union[int, List[Union[int, List[float]]]]] = None,
+    ):
         if version is None or nodes is None or steps is None:
             self.__clear()
             return
-        
+
         self.version = version
         self.__nodes = nodes
         self.__steps = steps
@@ -33,7 +36,11 @@ class Animation:
     def __eq__(self, other) -> bool:
         if not isinstance(other, Animation):
             return False
-        return self.version == other.version and self.__nodes == other.__nodes and self.__steps == other.__steps
+        return (
+            self.version == other.version
+            and self.__nodes == other.__nodes
+            and self.__steps == other.__steps
+        )
 
     def __clear(self):
         self.version = -1
@@ -163,16 +170,18 @@ class Animation:
         data = [values[1], values[2], values[3], values[4], values[5], values[6]]
         self.__steps[frame_number][1].append((id, data))
         return (True, frame_number)
-    
+
     @property
     def nodes(self) -> List[Union[int, str, int]]:
         return self.__nodes
-    
-    def step(self, step_number : int) -> Union[int, List[Union[int, List[float]]]]:
+
+    def step(self, step_number: int) -> Union[int, List[Union[int, List[float]]]]:
         if step_number >= len(self.__steps):
-            raise NameError(f"element {step_number} out of range: [0 : {len(self.__steps) - 1}]")
+            raise NameError(
+                f"element {step_number} out of range: [0 : {len(self.__steps) - 1}]"
+            )
         return self.__steps[step_number]
-    
+
     @property
     def steps(self) -> List[Union[int, List[Union[int, List[float]]]]]:
         return self.__steps
