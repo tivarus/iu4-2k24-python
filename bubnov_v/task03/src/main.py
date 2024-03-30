@@ -1,6 +1,7 @@
 import argparse
 import os
-from parse_smd import parse_file, create_new_smd
+from parse_smd import parse_file
+from output_smd import create_new_smd
 
 
 def main() -> None:
