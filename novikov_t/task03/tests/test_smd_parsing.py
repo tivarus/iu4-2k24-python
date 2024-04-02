@@ -1,7 +1,5 @@
 import os
-import sys
 import pytest
-# from src.smd_parse import generate_tree
 from src.smd_parse import SMDParser
 
 
@@ -16,22 +14,16 @@ from src.smd_parse import SMDParser
         ["..\\animset_t_anims\\a_move_c4_runSW.smd", 1]
     ]
 )
-def test_generate_tree(file_path: str, time: int):
+def test_smd_parse(file_path: str, time: int):
 
-    original_stdout = sys.stdout
     try:
         parser_1 = SMDParser(file_path)
-        # redirect cout to a file output.smd
-        with open("output.smd", "w") as test_output:
-            sys.stdout = test_output
-            # fill in the file with the output of get_smd_info()
-            parser_1.print_nodes()
-            print("end")
-            parser_1.frame_from_smd_file(time)
-            print()
-            parser_1.print_frame()
-            print("end")
-        sys.stdout = original_stdout
+        # fill in the file with the output
+        with open("output.smd", "w"):
+            pass
+        parser_1.print_nodes("output.smd")
+        parser_1.frame_from_smd_file(time)
+        parser_1.print_frame("output.smd")
         # read data from temporary file
         parser_2 = SMDParser("output.smd")
         parser_2.frame_from_smd_file(time)
