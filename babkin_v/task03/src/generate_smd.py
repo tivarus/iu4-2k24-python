@@ -1,5 +1,5 @@
 def generateSmd(elems: list):
-    with open("smd_filik3.smd", "w") as file:
+    with open("output.smd", "w") as file:
         nodes = elems[0]
         frames = elems[1]
 
