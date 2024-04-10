@@ -19,6 +19,7 @@ class Vector3:
         self.y = 0
         self.z = 0
 
+
 @dataclass
 class Node:
     node_id: int
@@ -47,7 +48,7 @@ class Bone:
     rotation: Vector3
 
     @classmethod
-    def from_text(self, text: str):
+    def from_text(cls, text: str):
         tokens_bone = [float(token.strip()) for token in text.split()]
         if len(tokens_bone) != 7:
             raise ValueError(f"Invalid line for bone: {text=}")
@@ -57,10 +58,11 @@ class Bone:
                       Vector3.from_list(tokens_bone[4:7])]
         except ValueError:
             raise ValueError(f"Cannot create Bone from text: {text=}")
-        return self(*values)
+        return cls(*values)
 
     def __repr__(self):
         return f"{self.bone_id} {self.position} {self.rotation}"
+
 
 @dataclass
 class Frame:
