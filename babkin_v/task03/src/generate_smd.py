@@ -1,4 +1,7 @@
-def generateSmd(elems: list):
+from types import Node, Frame
+
+
+def generateSmd(elems: list[list[Node], list[Frame]]) -> str:
     with open("output.smd", "w") as file:
         nodes = elems[0]
         frames = elems[1]

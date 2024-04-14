@@ -1,6 +1,6 @@
 import extras
 import parser
-from myClasses import Node, Frame, Vector3, Bone
+from types import Node, Frame, Vector3, Bone
 
 exmpl_string = "bind \"ins\" \"bot_place\""
 exmpl_Node_line = '80 "ValveBiped.weapon_bone" 40'

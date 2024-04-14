@@ -1,4 +1,4 @@
-from myClasses import Node, Frame, Bone, Vector3
+from types import Node, Frame, Bone
 
 
 def parse_nodes(filepath: str) -> list[Node]:
