@@ -1,11 +1,12 @@
 import pytest
-from src.Task03.animation_parser import *
+from src.Task03.animation_parser_alternative import *
 
 
 def test_node_parce():
-    filename = "a_move_c4_walkNE.smd"
+    filename = "P:\\Pyton\\T3\\animset_t_anims\\a_move_c4_walkNE.smd"
     parsed_nodes = parse_nodes(filename)
     assert len(parsed_nodes) == 85
+
 
 
 def test_frame_parce():
