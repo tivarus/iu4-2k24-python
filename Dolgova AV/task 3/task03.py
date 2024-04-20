@@ -53,8 +53,6 @@ def main():
                         k, timestamp = [word.strip() for word in line.split()]
                     else:
                         splitted = line.split()
-                        # print(splitted)
-                        # a, b, c, d, e, f, g = [word.strip() for word in line.split()]
                         tokens = [word.strip() for word in splitted]
                         if tokens[0] == '0':
                             if trigger_first_point == 0:
