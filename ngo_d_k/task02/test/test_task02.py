@@ -3,10 +3,10 @@ import pytest
 from typing import List
 
 from src.task02.task02 import (
-    gener_inden,
-    gener_u_l,
-    get_p,
-    get_r_n,
+    generate_indentations,
+    generate_union_list,
+    get_path,
+    get_reqursion_number,
 )
 
 
@@ -21,8 +21,8 @@ from src.task02.task02 import (
         [[False, False, False, False], "                "],
     ],
 )
-def test_generate_indentation(lines: List[bool], expected: str):
-    assert gener_inden(lines) == expected
+def test_generate_indentations(lines: List[bool], expected: str):
+    assert generate_indentations(lines) == expected
 
 
 @pytest.mark.parametrize(
@@ -57,7 +57,7 @@ def test_generate_indentation(lines: List[bool], expected: str):
 def test_generate_union_list(
     dirnames: List[str], filenames: List[str], expected: List[List]
 ):  # List[[str, bool]]
-    assert gener_u_l(dirnames, filenames) == expected
+    assert generate_union_list(dirnames, filenames) == expected
 
 
 @pytest.mark.parametrize(
@@ -71,7 +71,7 @@ def test_generate_union_list(
     ],
 )
 def test_get_path(arguments: List[str], expected: str):
-    assert get_p(arguments) == expected
+    assert get_path(arguments) == expected
 
 
 @pytest.mark.parametrize(
@@ -89,4 +89,4 @@ def test_get_path(arguments: List[str], expected: str):
     ],
 )
 def test_get_reqursion_number(arguments: List[str], expected: int):
-    assert get_r_n(arguments) == expected
+    assert get_reqursion_number(arguments) == expected
