@@ -34,11 +34,8 @@ def main():
                 mode = 'skeleton'
             elif 'end' in line:
                 mode = 'waiting'
-
             if mode == 'waiting':
                 i = 0
-
-            # print(mode)
             # блок нодов
             if mode == 'nodes':
                 if i == 1:
@@ -47,9 +44,7 @@ def main():
                     tokens = [word.strip() for word in line.split()]
                     node = Node(*tokens)
                     nodes.append(node)
-
                 i = 1
-
             # блок координат
             if mode == 'skeleton':
                 if i == 1:
@@ -61,7 +56,6 @@ def main():
                         # print(splitted)
                         # a, b, c, d, e, f, g = [word.strip() for word in line.split()]
                         tokens = [word.strip() for word in splitted]
-
                         if tokens[0] == '0':
                             if trigger_first_point == 0:
                                 first_point = Timeframe(timestamp, *tokens)
@@ -70,10 +64,7 @@ def main():
                         else:
                             timeframe = Timeframe(timestamp, *tokens)
                         timeframes.append(timeframe)
-
-                        # print(a)
                 i = 1
-
     print_file(nodes, timeframes)
 
 
