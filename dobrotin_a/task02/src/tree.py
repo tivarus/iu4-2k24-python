@@ -18,14 +18,21 @@ class Symbol(Enum):
 class Dir:
     name: str
     lvl: int
-    self_last: bool
     is_base: bool
     dir_content: list[str]
-    next: Self = None
+    is_last: bool = False
+    par_dir: Self = None
 
-
-def dir_is_last(dir_it: str, dir_cont: list[str]) -> bool:
-    return dir_cont[-1] == dir_it
+    def __init__(self, name: str, lvl: int, is_base: bool, dir_content: list[str], par_dir: Self = None):
+        self.name = name
+        self.lvl = lvl
+        self.is_base = is_base
+        self.dir_content = dir_content
+        self.par_dir = par_dir
+        if par_dir is None:
+            self.is_last = False
+        else:
+            self.is_last = self.par_dir.dir_content[-1] == self.name
 
 
 def get_subdirs(parent_dir: Dir, depth: int) -> list[Dir]:
@@ -41,15 +48,12 @@ def get_subdirs(parent_dir: Dir, depth: int) -> list[Dir]:
 
     if len(parent_dir.dir_content) != 0:
         for dir_it in parent_dir.dir_content:
-            subdir: Dir = Dir(name=dir_it, lvl=(parent_dir.lvl - 1),
-                              self_last=dir_is_last(dir_it, parent_dir.dir_content), is_base=False, dir_content=[])
-            if subdir.lvl != depth:  # because we don't need and indent for 'depth' (base) lvl
-                subdir.next = parent_dir
+            subdir: Dir = Dir(name=dir_it, lvl=(parent_dir.lvl - 1), is_base=False, dir_content=[], par_dir=parent_dir)
 
             dirs_this_lvl.append(subdir)
 
             if subdir.lvl == 0:
-                if subdir.self_last:
+                if subdir.is_last:
                     return dirs_this_lvl
             else:
                 dirs_this_lvl.extend(get_subdirs(subdir, depth))
@@ -58,7 +62,7 @@ def get_subdirs(parent_dir: Dir, depth: int) -> list[Dir]:
 
 
 def get_tree(base_dir_name: str, depth: int) -> list[Dir]:
-    base_dir = Dir(name=base_dir_name, lvl=(depth + 1), self_last=False, is_base=True, dir_content=[])
+    base_dir = Dir(name=base_dir_name, lvl=(depth + 1), is_base=True, dir_content=[])
 
     tree: list[Dir] = [base_dir]
     tree.extend(get_subdirs(base_dir, depth))
@@ -76,23 +80,33 @@ def get_output_color(path: str) -> str:
 
 
 def print_tree(tree: list[Dir]) -> None:
+    dir_cnt: int = 0
+    files_cnt: int = 0
     for dir_it in tree:
         line: str = os.path.basename(dir_it.name)
         line = f'{get_output_color(dir_it.name)}{line}'
         if not dir_it.is_base:
-            if dir_it.self_last:
+            if os.path.isdir(dir_it.name):
+                dir_cnt += 1
+            else:
+                files_cnt += 1
+
+            if dir_it.is_last:
                 line = f'{Symbol.LAST.value}{line}'
             else:
                 line = f'{Symbol.INNER.value}{line}'
 
-            parent_dir = dir_it.next
+            parent_dir = dir_it.par_dir
             while parent_dir:
-                if parent_dir.self_last:
+                if parent_dir.is_base:
+                    line = line
+                elif parent_dir.is_last:
                     line = f'{Symbol.TAB.value}{line}'
                 else:
                     line = f'{Symbol.OUTER.value}{line}'
-                parent_dir = parent_dir.next
+                parent_dir = parent_dir.par_dir
         print(f'{line}{Style.RESET_ALL}')
+    print(f'Folders: {dir_cnt}, files: {files_cnt}')
 
 
 def main():
