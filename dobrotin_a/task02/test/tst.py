@@ -33,6 +33,7 @@ def test_tree_depth_1(create_directory_structure, capsys):
         "└── \x1b[34msubdir3\x1b[0m\n"
         "    ├── \x1b[34msubsubdir1\x1b[0m\n"
         "    └── \x1b[34msubsubdir2\x1b[0m\n"
+        "Folders: 6, files: 0\n"
     )
     assert captured.out == expected_output
 
@@ -52,6 +53,7 @@ def test_tree_depth_2(create_directory_structure, capsys):
         "    └── \x1b[34msubsubdir2\x1b[0m\n"
         "        ├── \x1b[34msubbbdir1\x1b[0m\n"
         "        └── \x1b[34msubbbdir2\x1b[0m\n"
+        "Folders: 8, files: 0\n"
     )
     assert captured.out == expected_output
 
@@ -72,5 +74,6 @@ def test_tree_depth_3(create_directory_structure, capsys):
         "        ├── \x1b[34msubbbdir1\x1b[0m\n"
         "        │   └── \x1b[34mnow_last_for_sure\x1b[0m\n"
         "        └── \x1b[34msubbbdir2\x1b[0m\n"
+        "Folders: 9, files: 0\n"
     )
     assert captured.out == expected_output
